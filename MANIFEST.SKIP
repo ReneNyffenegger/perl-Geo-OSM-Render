@@ -1,0 +1,5 @@
+\.git
+\.swp$
+\.bak$
+Geo-OSM-Render-.*\.tar\.gz
+blib
