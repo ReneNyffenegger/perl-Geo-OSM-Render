@@ -19,9 +19,10 @@ WriteMakefile(
     PREREQ_PM => {
 #     '' => 0
     },
-    BUILD_REQUIRES => {
-        'Test::Simple' => 0,
-        'Test::More'   => 0,
+    TEST_REQUIRES => {
+        'Test::Simple'                      => 0,
+        'Test::More'                        => 0,
+        'Geo::Coordinates::Converter::LV03' => 0.02,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'Geo-OSM-Render-*' },

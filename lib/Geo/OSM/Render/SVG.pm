@@ -15,6 +15,8 @@ use strict;
 use utf8;
 use Carp;
 
+use Geo::OSM::Render;
+
 #_}
 our $VERSION = 0.01;
 our @ISA = qw(Geo::OSM::Render);
@@ -35,10 +37,10 @@ our @ISA = qw(Geo::OSM::Render);
 
 #_}
 #_{ Methods
-
+#_{ POD
 =head1 METHODS
 =cut
-
+#_}
 sub new { #_{
 #_{ POD
 
@@ -48,8 +50,7 @@ sub new { #_{
       $max_width_height
       $lat_min, $lon_min,
       $lat_max, $lon_max,
-      $cp_lat_to_y,
-      $cp_lon_to_x
+      $cp_lat_lon_2_x_y
     );
 
 =cut
@@ -67,16 +68,55 @@ sub new { #_{
   my $lon_min          = shift;
   my $lat_max          = shift;
   my $lon_max          = shift;
-  my $cp_lat_lon_2_y_x = shift;
+  my $cp_lat_lon_2_x_y = shift;
+
+  croak "cp_lat_lon_2_x_y must be a code ref, but is " . ref($cp_lat_lon_2_x_y) unless ref($cp_lat_lon_2_x_y) eq 'CODE';
 
   $self->{max_width_height} = $max_width_height;
   $self->{lat_min         } = $lat_min         ;
   $self->{lon_min         } = $lon_min         ;
   $self->{lat_max         } = $lat_max         ;
   $self->{lon_max         } = $lon_max         ;
-  $self->{cp_lat_lon_2_y_x} = $cp_lat_lon_2_y_x;
+  $self->{cp_lat_lon_2_x_y} = $cp_lat_lon_2_x_y;
+
+  $self->_determine_width_height();
 
   return $self;
+
+} #_}
+sub _determine_width_height { #_{
+#_{ POD
+
+=head2 _determine_width_height
+
+This method determines the width and height of the produced SVG so that C<< max($width, $height) >> is equal to C<< $max_width_height >> which was passed in the
+L</new> method.
+
+=cut
+
+  my $self = shift;
+
+#_}
+  
+ (
+  $self->{x_min}, $self->{y_min},
+  $self->{x_max}, $self->{y_max}
+ ) = (
+  &{$self->{cp_lat_lon_2_x_y}}($self->{lat_min}, $self->{lon_min}),
+  &{$self->{cp_lat_lon_2_x_y}}($self->{lat_max}, $self->{lon_max})
+ );
+
+  my $width_  = $self->{x_max}-$self->{x_min};
+  my $height_ = $self->{y_max}-$self->{y_min};
+
+  if ($width_ > $height_) {
+    $self->{width } = $self->{max_width_height};
+    $self->{height} = $self->{max_width_height} / $width_*$height_;
+  }
+  else {
+    $self->{height} = $self->{max_width_height};
+    $self->{width } = $self->{max_width_height} / $height_*$width_;
+  }
 
 } #_}
 
