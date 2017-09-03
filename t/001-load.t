@@ -5,6 +5,7 @@ use Geo::OSM::Render::SVG;
 
 my $osm_render     = Geo::OSM::Render     ->new();
 my $osm_render_svg = Geo::OSM::Render::SVG->new(
+ 't/001-load.svg',
   1,
   1, 1,
   2, 2,

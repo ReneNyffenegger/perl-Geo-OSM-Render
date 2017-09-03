@@ -15,6 +15,7 @@ use strict;
 use utf8;
 use Carp;
 
+use SVG;
 use Geo::OSM::Render;
 
 #_}
@@ -47,11 +48,16 @@ sub new { #_{
 =head2 new
 
     my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
+      $svg_filename,
       $max_width_height
       $lat_min, $lon_min,
       $lat_max, $lon_max,
       $cp_lat_lon_2_x_y
     );
+
+    …
+
+    $osm_renderer_svg->end();
 
 =cut
 
@@ -63,6 +69,7 @@ sub new { #_{
 
   croak "Wrong class $class" unless $self->isa('Geo::OSM::Render::SVG');
 
+  my $svg_filename     = shift;
   my $max_width_height = shift;
   my $lat_min          = shift;
   my $lon_min          = shift;
@@ -71,6 +78,8 @@ sub new { #_{
   my $cp_lat_lon_2_x_y = shift;
 
   croak "cp_lat_lon_2_x_y must be a code ref, but is " . ref($cp_lat_lon_2_x_y) unless ref($cp_lat_lon_2_x_y) eq 'CODE';
+
+  open ($self->{svg_fh}, '>', $svg_filename) or croak "Could not open $svg_filename";
 
   $self->{max_width_height} = $max_width_height;
   $self->{lat_min         } = $lat_min         ;
@@ -81,8 +90,26 @@ sub new { #_{
 
   $self->_determine_width_height();
 
+  $self->{svg}             = SVG->new(width=>$self->{width}, height=>$self->{height}) or croak "Could not start svg";
+
   return $self;
 
+} #_}
+sub end { #_{
+#_{ POD
+
+=head2 end
+
+When finished rendering, this method writes the SVG.
+
+=cut
+
+  my $self = shift;
+  my $svg_text = $self->{svg}->xmlify();
+  print {$self->{svg_fh}} $svg_text;
+  close $self->{svg_fh};
+
+#_}
 } #_}
 sub _determine_width_height { #_{
 #_{ POD
@@ -119,7 +146,6 @@ L</new> method.
   }
 
 } #_}
-
 #_}
 #_{ POD: Author
 

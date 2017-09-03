@@ -17,7 +17,7 @@ WriteMakefile(
         'ExtUtils::MakeMaker' => 0,
     },
     PREREQ_PM => {
-#     '' => 0
+         'SVG' => 0
     },
     TEST_REQUIRES => {
         'Test::Simple'                      => 0,

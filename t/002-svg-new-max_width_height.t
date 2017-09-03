@@ -1,10 +1,16 @@
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 use Geo::OSM::Render::SVG;
 
 use Geo::Coordinates::Converter::LV03 qw(lat_lng_2_y_x);
 
+my $svg_filename = 't/002-svg-new-max-width_heigth.svg';
+
+unlink $svg_filename if -f $svg_filename;
+ok(! -f $svg_filename);
+
 my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
+  $svg_filename,
    750,
 
                  # ------------  According to https://en.wikipedia.org/wiki/List_of_extreme_points_of_Switzerland:
@@ -21,3 +27,7 @@ my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
 
 is(       $osm_renderer_svg->{width }           , 750, 'calculated width' );
 is( int ( $osm_renderer_svg->{height} / 10) * 10, 480, 'calculated height');
+
+$osm_renderer_svg->end();
+
+ok(-f $svg_filename);
