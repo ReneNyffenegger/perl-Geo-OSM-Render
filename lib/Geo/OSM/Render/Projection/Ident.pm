@@ -3,10 +3,10 @@
 =encoding utf8
 =head1 NAME
 
-Geo::OSM::Render - Render OpenStreetMap data encaspulated via L<Geo::OSM::Primitive>, possibly stored in a L<Geo::OSM::DBI> database.
+Geo::OSM::Render::Projection::Ident - Project OSM latitudes and longitudes into x, y coordinate pairs to be rendered by L<Geo::OSM::Render>.
 
 =cut
-package Geo::OSM::Render;
+package Geo::OSM::Render::Projection::Ident;
 #_}
 #_{ use …
 use warnings;
@@ -14,6 +14,8 @@ use strict;
 
 use utf8;
 use Carp;
+use Geo::OSM::Render::Projection;
+our @ISA = qw(Geo::OSM::Render::Projection);
 
 #_}
 our $VERSION = 0.01;
@@ -21,6 +23,7 @@ our $VERSION = 0.01;
 
 =head1 SYNOPSIS
 
+This class derives from L<<Geo::OSM::Render::Projection>>. It performs an ident projection.
 
 =cut
 #_}
@@ -28,22 +31,22 @@ our $VERSION = 0.01;
 
 =head1 OVERVIEW
 
-…
+See L<Geo::OSM::Render::Projection/OVERVIEW>.
 
 =cut
 
 #_}
 #_{ Methods
-
+#_{ POD
 =head1 METHODS
 =cut
-
+#_}
 sub new { #_{
 #_{ POD
 
 =head2 new
 
-    new();
+    my $proj = Geo::OSM::Render::Projection::Ident->new();
 
 
 =cut
@@ -51,38 +54,27 @@ sub new { #_{
 #_}
 
   my $class = shift;
-
-  my $self = {};
-  bless $self, $class;
-
-  croak "Wrong class $class" unless $self->isa('Geo::OSM::Render');
-
+  my $self  = $class->SUPER::new();
   return $self;
 
 } #_}
-sub render { #_{
-
+sub lat_lon_to_x_y { #_{
 #_{ POD
 
-=head2 render
+=head2 lat_lon_to_x_y
 
-    $osm_svg_renderer->render($osm_primitive);
-
-C<<$osm_primitive>> must be eiter a L<Geo::OSM::Primitive::Node> or a
-L<Geo::OSM::Primitive::Way>. Currently, I am not sure if a
-L<Geo::OSM::Primitive::Relation> should be able to be rendered.
+    my ($x, $y) = $projection->lat_lon_to_x_y($lat, $lon);
 
 =cut
 
 #_}
 
-  my $self      = shift;
-  my $primitive = shift;
-
-  croak "primitive is neither a Node nor a Way, but a $primitive" unless
-    $primitive->isa('Geo::OSM::Primitive::Node') or
-    $primitive->isa('Geo::OSM::Primitive::Way' );
-
+  my $self = shift;
+#
+# Must return the passed parameters lat and lon in reverse order because
+# lat goes in upward direction, lon goes in sideward direction, but x and
+# y is vice versa:
+  return ($_[1], $_[0]);
 
 } #_}
 #_}
@@ -90,7 +82,7 @@ L<Geo::OSM::Primitive::Relation> should be able to be rendered.
 
 =head1 AUTHOR
 
-René Nyffenegger <rene.nyffenegger@adp-gmbh.ch>
+René Nyffenegger <rene.nyffenegger at adp-gmbh.ch>
 
 =cut
 
@@ -98,13 +90,11 @@ René Nyffenegger <rene.nyffenegger@adp-gmbh.ch>
 #_{ POD: Copyright and License
 
 =head1 COPYRIGHT AND LICENSE
-
 Copyright © 2017 René Nyffenegger, Switzerland. All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
 copy of the full license at: L<http://www.perlfoundation.org/artistic_license_2_0>
-
 =cut
 
 #_}

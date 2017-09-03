@@ -1,10 +1,12 @@
+use strict;
+use warnings;
 use Test::More tests => 4;
 
 use Geo::OSM::Render::SVG;
 
 use Geo::Coordinates::Converter::LV03 qw(lat_lng_2_y_x);
 
-my $svg_filename = 't/002-svg-new-max-width_heigth.svg';
+my $svg_filename = 't/002-svg-new-max_width_height.svg';
 
 unlink $svg_filename if -f $svg_filename;
 ok(! -f $svg_filename);

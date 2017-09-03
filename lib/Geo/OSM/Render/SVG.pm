@@ -103,13 +103,33 @@ sub end { #_{
 When finished rendering, this method writes the SVG.
 
 =cut
-
+#_}
   my $self = shift;
   my $svg_text = $self->{svg}->xmlify();
   print {$self->{svg_fh}} $svg_text;
   close $self->{svg_fh};
 
+} #_}
+sub render { #_{
+#_{ POD
+
+=head2 render
+
+See L<Geo::OSM::Render/render>.
+
+=cut
 #_}
+
+  my $self      = shift;
+  my $primitive = shift;
+
+  $self->SUPER::render($primitive);
+
+  if ($primitive->isa('Geo::OSM::Primitive::Node')) {
+    my ($x, $y) = &{$self->{cp_lat_lon_2_x_y}}($primitive->{lat}, $primitive->{lon});
+    print "$x, $y\n";
+  }
+
 } #_}
 sub _determine_width_height { #_{
 #_{ POD
@@ -144,6 +164,35 @@ L</new> method.
     $self->{height} = $self->{max_width_height};
     $self->{width } = $self->{max_width_height} / $height_*$width_;
   }
+
+} #_}
+sub _x_y_to_svg_x_y { #_{
+#_{ POD
+
+=head2 _x_y_to_svg_x_y
+
+    my ($svg_x, $svg_y) = $self->_x_y_to_svg_x_y($x, $y);
+
+This method converts an C<x,y> coordinate pair to svg coordinates. Ideally, the
+returned values are greater or equal 0 and smaller or equal to the svg width or
+height respectively.
+
+=cut
+#_}
+
+  my $self = shift;
+  my $x    = shift;
+  my $y    = shift;
+
+  my $todo_width  = 1;
+  my $todo_height = 1;
+
+# In SVG, the coordinate 0/0 marks the *upper* left corner, so
+# for y, we have to make an additional substraction for $y.
+  my $x_ =                   ($x - $self->{x_min}) / $todo_width  * $self->{width };
+  my $y_ = $self->{height} - ($y - $self->{y_min}) / $todo_height * $self->{height}; 
+
+  return ($x_, $y_);
 
 } #_}
 #_}

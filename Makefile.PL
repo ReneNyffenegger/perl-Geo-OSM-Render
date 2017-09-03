@@ -17,7 +17,9 @@ WriteMakefile(
         'ExtUtils::MakeMaker' => 0,
     },
     PREREQ_PM => {
-         'SVG' => 0
+         'SVG'                              => 0,
+         'Geo::OSM::Primitive::Node'        => 0,
+         'Geo::OSM::Primitive::Way'         => 0,
     },
     TEST_REQUIRES => {
         'Test::Simple'                      => 0,
