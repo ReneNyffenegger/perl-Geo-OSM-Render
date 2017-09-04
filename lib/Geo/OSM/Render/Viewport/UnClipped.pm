@@ -3,10 +3,10 @@
 =encoding utf8
 =head1 NAME
 
-Geo::OSM::Render::Viewport::Unbounded - Use an ounbounded L<<viewport | Geo::OSM::Render::Viewport >> to create a map.
+Geo::OSM::Render::Viewport::UnClipped - Use an ounbounded L<<viewport | Geo::OSM::Render::Viewport >> to create a map.
 
 =cut
-package Geo::OSM::Render::Viewport::Unbounded;
+package Geo::OSM::Render::Viewport::UnClipped;
 #_}
 #_{ use …
 use warnings;
@@ -46,7 +46,7 @@ sub new { #_{
 
 =head2 new
 
-    my $proj = Geo::OSM::Render::Viewport::Unbounded->new();
+    my $proj = Geo::OSM::Render::Viewport::UnClipped->new();
 
 
 =cut

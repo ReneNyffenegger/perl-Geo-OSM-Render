@@ -1,8 +1,8 @@
 use Test::More tests => 2;
 
-use Geo::OSM::Render::Viewport::Unbounded;
+use Geo::OSM::Render::Viewport::UnClipped;
 
-my $vp = Geo::OSM::Render::Viewport::Unbounded->new();
+my $vp = Geo::OSM::Render::Viewport::UnClipped->new();
 
 my $x=42;
 my $y=99;
