@@ -24,6 +24,7 @@ WriteMakefile(
     TEST_REQUIRES => {
         'Test::Simple'                      => 0,
         'Test::More'                        => 0,
+        'Test::File'                        => 0,
         'Geo::Coordinates::Converter::LV03' => 0.02,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
