@@ -3,7 +3,7 @@ use warnings;
 use Test::More tests => 6;
 use Test::File;
 
-use Geo::OSM::Render::SVG;
+use Geo::OSM::Render::Renderer::SVG;
 
 use Geo::Coordinates::Converter::LV03 qw(lat_lng_2_y_x);
 use Geo::OSM::Render::Projection::CH_LV03;
@@ -41,7 +41,7 @@ my $osm_vp_cl      = Geo::OSM::Render::Viewport::Clipped  ->new(
    max_width_height => 750
 );
 
-my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
+my $osm_renderer_svg = Geo::OSM::Render::Renderer::SVG->new(
   $svg_filename,
   $osm_vp_cl,
   $osm_proj_ch

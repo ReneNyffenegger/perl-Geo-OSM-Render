@@ -3,7 +3,7 @@
 =encoding utf8
 =head1 NAME
 
-Geo::OSM::Render - Render OpenStreetMap data encaspulated via L<Geo::OSM::Primitive>, possibly stored in a L<Geo::OSM::DBI> database.
+Geo::OSM::Render - Collection of Perl modules to render OpenStreetMap data encaspulated via L<Geo::OSM::Primitive>, possibly stored in a L<Geo::OSM::DBI> database.
 
 =cut
 package Geo::OSM::Render;
@@ -36,55 +36,10 @@ our $VERSION = 0.01;
 #_{ Methods
 
 =head1 METHODS
-=cut
 
-sub new { #_{
-#_{ POD
-
-=head2 new
-
-    new();
-
+No method. That'r right. This package contains none.
 
 =cut
-
-#_}
-
-  my $class = shift;
-
-  my $self = {};
-  bless $self, $class;
-
-  croak "Wrong class $class" unless $self->isa('Geo::OSM::Render');
-
-  return $self;
-
-} #_}
-sub render { #_{
-
-#_{ POD
-
-=head2 render
-
-    $osm_svg_renderer->render($osm_primitive);
-
-C<<$osm_primitive>> must be eiter a L<Geo::OSM::Primitive::Node> or a
-L<Geo::OSM::Primitive::Way>. Currently, I am not sure if a
-L<Geo::OSM::Primitive::Relation> should be able to be rendered.
-
-=cut
-
-#_}
-
-  my $self      = shift;
-  my $primitive = shift;
-
-  croak "primitive is neither a Node nor a Way, but a $primitive" unless
-    $primitive->isa('Geo::OSM::Primitive::Node') or
-    $primitive->isa('Geo::OSM::Primitive::Way' );
-
-
-} #_}
 #_}
 #_{ POD: Author
 
