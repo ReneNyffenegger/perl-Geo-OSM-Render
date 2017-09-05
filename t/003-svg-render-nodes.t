@@ -10,12 +10,12 @@ use Geo::OSM::Render::SVG;
 
 my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
   't/003-svg-render-nodes.svg',
-   800,
-    -1,  # Southernmost
-    -2,  # Westernmost
-     5,  # Northernmost
-     6,  # Eeastermost
-   sub {return ($_[1], $_[0]);}
+#  800,
+#   -1,  # Southernmost
+#   -2,  # Westernmost
+#    5,  # Northernmost
+#    6,  # Eeastermost
+#  sub {return ($_[1], $_[0]);}
 );
 
 $osm_renderer_svg->render($node);

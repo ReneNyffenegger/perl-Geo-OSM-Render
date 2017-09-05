@@ -46,7 +46,7 @@ sub new { #_{
 
 =head2 new
 
-    my $proj = Geo::OSM::Render::Viewport::UnClipped->new();
+    my $vp = Geo::OSM::Render::Viewport::UnClipped->new();
 
 
 =cut

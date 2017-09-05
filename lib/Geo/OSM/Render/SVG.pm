@@ -47,12 +47,13 @@ sub new { #_{
 
 =head2 new
 
+    my $proj = Geo::OSM::Render::Projection::CH_LV03->new();
+    my $vp   = Geo::OSM::Render::Viewport::Clipped->new(…);
+
     my $osm_renderer_svg = Geo::OSM::Render::SVG->new(
       $svg_filename,
-      $max_width_height
-      $lat_min, $lon_min,
-      $lat_max, $lon_max,
-      $cp_lat_lon_2_x_y
+      $proj,
+      $vp
     );
 
     …
@@ -70,27 +71,45 @@ sub new { #_{
   croak "Wrong class $class" unless $self->isa('Geo::OSM::Render::SVG');
 
   my $svg_filename     = shift;
-  my $max_width_height = shift;
-  my $lat_min          = shift;
-  my $lon_min          = shift;
-  my $lat_max          = shift;
-  my $lon_max          = shift;
-  my $cp_lat_lon_2_x_y = shift;
 
-  croak "cp_lat_lon_2_x_y must be a code ref, but is " . ref($cp_lat_lon_2_x_y) unless ref($cp_lat_lon_2_x_y) eq 'CODE';
+  while (@_) {
+    if ($_[0] -> isa('Geo::OSM::Render::Viewport::Clipped')) {
+      $self->{viewport} = shift;
+      next;
+    }
+    if ($_[0] -> isa('Geo::OSM::Render::Projection')) {
+      $self->{projection} = shift;
+      next;
+    }
+    last;
+  }
+
+  croak 'Missing viewport' unless $self->{viewport};
+
+# my $max_width_height = shift;
+# my $lat_min          = shift;
+# my $lon_min          = shift;
+# my $lat_max          = shift;
+# my $lon_max          = shift;
+# my $cp_lat_lon_2_x_y = shift;
+
+# croak "cp_lat_lon_2_x_y must be a code ref, but is " . ref($cp_lat_lon_2_x_y) unless ref($cp_lat_lon_2_x_y) eq 'CODE';
 
   open ($self->{svg_fh}, '>', $svg_filename) or croak "Could not open $svg_filename";
 
-  $self->{max_width_height} = $max_width_height;
-  $self->{lat_min         } = $lat_min         ;
-  $self->{lon_min         } = $lon_min         ;
-  $self->{lat_max         } = $lat_max         ;
-  $self->{lon_max         } = $lon_max         ;
-  $self->{cp_lat_lon_2_x_y} = $cp_lat_lon_2_x_y;
+# $self->{max_width_height} = $max_width_height;
+# $self->{lat_min         } = $lat_min         ;
+# $self->{lon_min         } = $lon_min         ;
+# $self->{lat_max         } = $lat_max         ;
+# $self->{lon_max         } = $lon_max         ;
+# $self->{cp_lat_lon_2_x_y} = $cp_lat_lon_2_x_y;
 
-  $self->_determine_width_height();
+# $self->_determine_width_height();
 
-  $self->{svg}             = SVG->new(width=>$self->{width}, height=>$self->{height}) or croak "Could not start svg";
+  $self->{svg} = SVG->new(
+    width  => $self->{viewport}->map_width (),
+    height => $self->{viewport}->map_height()
+  ) or croak "Could not start svg";
 
   return $self;
 

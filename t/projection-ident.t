@@ -1,3 +1,5 @@
+use warnings;
+use strict;
 use Test::More tests => 2;
 
 use Geo::OSM::Render::Projection::Ident;
