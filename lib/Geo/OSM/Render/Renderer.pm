@@ -118,7 +118,34 @@ Renders C<< $way>> which must be a L<Geo::OSM::Primitive::Way> (or derived from 
   croak "$way is not a Way" unless $way->isa('Geo::OSM::Primitive::Way');
 
 } #_}
-sub node_to_map_coordinates {
+sub lat_lon_to_map_coordinates { #_{
+#_{ POD
+
+=head2 lat_lon_to_map_coordinates
+
+    my ($map_x, $map_y) = $osm_svg_renderer->lat_lon_to_map_coordinates($lat, $lon);
+
+Convert the lattitude/longitude pair C<<$lat>> and C<<$lon>> to map coordinates and return them.
+
+=cut
+
+#_}
+  
+  my $self = shift;
+# my $node = shift;
+  my $lat  = shift;
+  my $lon  = shift;
+
+# croak "$node is not a node" unless $node->isa('Geo::OSM::Primitive::Node');
+
+  my ($x    , $y    ) = $self->{projection}->lat_lon_to_x_y($lat        , $lon        );
+# my ($x    , $y    ) = $self->{projection}->lat_lon_to_x_y($node->{lat}, $node->{lon});
+  my ($x_map, $y_map) = $self->{viewport  }->x_y_to_map_x_y($x, $y);
+
+  return ($x_map, $y_map);
+
+} #_}
+sub node_to_map_coordinates { #_{
 #_{ POD
 
 =head2 node_to_map_coordinates
@@ -134,12 +161,14 @@ sub node_to_map_coordinates {
 
   croak "$node is not a node" unless $node->isa('Geo::OSM::Primitive::Node');
 
-  my ($x    , $y    ) = $self->{projection}->lat_lon_to_x_y($node->{lat}, $node->{lon});
-  my ($x_map, $y_map) = $self->{viewport  }->x_y_to_map_x_y($x, $y);
+  return $self->lat_lon_to_map_coordinates($node->lat, $node->lon);
 
-  return ($x_map, $y_map);
+# my ($x    , $y    ) = $self->{projection}->lat_lon_to_x_y($node->{lat}, $node->{lon});
+# my ($x_map, $y_map) = $self->{viewport  }->x_y_to_map_x_y($x, $y);
 
-}
+# return ($x_map, $y_map);
+
+} #_}
 #_}
 #_{ POD: Author
 

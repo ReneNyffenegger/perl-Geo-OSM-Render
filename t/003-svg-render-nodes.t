@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 6;
 use Test::File;
 
 use Geo::OSM::Primitive::Node;
@@ -58,10 +58,21 @@ $osm_renderer_svg->render_way(
   $way_1,
   styles => {
     'stroke'       => 'rgb( 30,  60, 255)',
-    'stroke-width' => '3px',
+    'stroke-width' => '2px',
     'fill'         => 'none',
   }
 );
+
+$osm_renderer_svg->line(
+  $node_1->lat, $node_1->lon,
+  $node_4->lat, $node_4->lon,
+  styles => {
+    'stroke-dasharray' => '5, 5',
+    'stroke'           => 'rgb(100, 200, 100)',
+    'stroke-width'     =>  5,
+  }
+);
+
 
 $osm_renderer_svg->end;
 
@@ -70,4 +81,6 @@ file_contains_utf8_like($svg_filename, [
     qr/<svg .*width="800"/ ,
     qr/<circle cx="400" cy="100" r="20" style="fill: #f63; stroke: #f31; stroke-width: 5" \/>/,
     qr/<circle cx="200" cy="500" r="10" style="fill: #36f; stroke: #135; stroke-width: 8" \/>/,
+    qr/<polyline points="400,100 300,200 400,400 200,500" style="fill: none; stroke: rgb\( 30,  60, 255\); stroke-width: 2px" \/>/,
+	  qr/<line style="stroke: rgb\(100, 200, 100\); stroke-dasharray: 5, 5; stroke-width: 5" x1="400" x2="400" y1="100" y2="400" \/>/,
 ]);

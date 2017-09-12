@@ -153,17 +153,15 @@ See also L<Geo::OSM::Render::Renderer/render_node>.
 sub render_way { #_{
 #_{ POD
 
-=head2 render_node
+=head2 render_way
 
-    $osm_renderer_svg -> render_node(
-      $node,
-      r => $radius,
+    $osm_renderer_svg -> render_way(
       styles=> { … }
     ); 
 
-Renders a L<< node|Geo::OSM::Primitive::Node >>.
+Renders a L<< way|Geo::OSM::Primitive::Way >>.
 
-See also L<Geo::OSM::Render::Renderer/render_node>.
+See also L<< Geo::OSM::Render::Renderer/render_way >>.
 
 =cut
 #_}
@@ -182,7 +180,7 @@ See also L<Geo::OSM::Render::Renderer/render_node>.
   for my $node (@nodes) {
     my ($x_map, $y_map) = $self->node_to_map_coordinates($node);
     $points .= ' ' if $points;
-    $points .= "$x_map, $y_map";
+    $points .= "$x_map,$y_map";
   }
 
   $self->{svg}->polyline(
@@ -191,6 +189,46 @@ See also L<Geo::OSM::Render::Renderer/render_node>.
   );        
 
 } #_}
+sub line {
+#_{ POD
+
+=head2 line
+
+    $osm_renderer_svg -> line(
+      $lat_start, $lon_start,
+      $lat_end  , $lon_end,
+      styles=> { … }
+    ); 
+
+Draws a line on the SVG map.
+
+
+See also L<< Geo::OSM::Render::Renderer/render_way >>.
+
+=cut
+
+   my $self      = shift;
+   my $lat_start = shift;
+   my $lon_start = shift;
+   my $lat_end   = shift;
+   my $lon_end   = shift;
+   my %opts      = @_;
+
+   my $styles = delete $opts{styles} // {};
+
+   my ($map_x_start, $map_y_start) = $self->lat_lon_to_map_coordinates($lat_start, $lon_start);
+   my ($map_x_end  , $map_y_end  ) = $self->lat_lon_to_map_coordinates($lat_end  , $lon_end  );
+
+   $self->{svg}->line(
+      x1 => $map_x_start, y1 => $map_y_start,
+      x2 => $map_x_end  , y2 => $map_y_end,
+      style => $styles
+   );
+
+
+
+#_}
+}
 # sub _determine_width_height { #_{
 # #_{ POD
 # 
