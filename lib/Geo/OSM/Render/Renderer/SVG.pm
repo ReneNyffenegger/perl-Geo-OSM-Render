@@ -19,7 +19,7 @@ use SVG;
 use Geo::OSM::Render::Renderer;
 
 #_}
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 our @ISA = qw(Geo::OSM::Render::Renderer);
 #_{ Synopsis
 

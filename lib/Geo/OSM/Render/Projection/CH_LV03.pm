@@ -19,7 +19,7 @@ use Geo::Coordinates::Converter::LV03 qw(lat_lng_2_y_x);
 our @ISA = qw(Geo::OSM::Render::Projection);
 
 #_}
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 #_{ Synopsis
 
 =head1 SYNOPSIS

@@ -16,7 +16,7 @@ use utf8;
 use Carp;
 
 #_}
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 #_{ Synopsis
 
 =head1 SYNOPSIS

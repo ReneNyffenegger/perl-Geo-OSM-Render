@@ -18,7 +18,7 @@ use Geo::OSM::Render::Projection;
 our @ISA = qw(Geo::OSM::Render::Projection);
 
 #_}
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 #_{ Synopsis
 
 =head1 SYNOPSIS
