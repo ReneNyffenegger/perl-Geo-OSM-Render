@@ -306,17 +306,19 @@ René Nyffenegger <rene.nyffenegger@adp-gmbh.ch>
 #_{ POD: Copyright and License
 
 =head1 COPYRIGHT AND LICENSE
+
 Copyright © 2017 René Nyffenegger, Switzerland. All rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
 copy of the full license at: L<http://www.perlfoundation.org/artistic_license_2_0>
+
 =cut
 
 #_}
 #_{ POD: Source Code
 
-=head1 Source Code
+=head1 SOURCE CODE
 
 The source code is on L<< github|https://github.com/ReneNyffenegger/perl-Geo-OSM-Render >>. Meaningful pull requests are welcome.
 

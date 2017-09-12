@@ -37,7 +37,11 @@ our $VERSION = 0.02;
 
 =head1 METHODS
 
-No method. That'r right. This package contains none.
+No method. That's right. This package contains none. The functionality is
+implemented in desencdants of the base classes
+L<< Geo::OSM::Render::Projection >>,
+L<< Geo::OSM::Render::Viewport >> and
+L<< Geo::OSM::Render::Renderer >>.
 
 =cut
 #_}
@@ -65,7 +69,7 @@ copy of the full license at: L<http://www.perlfoundation.org/artistic_license_2_
 #_}
 #_{ POD: Source Code
 
-=head1 Source Code
+=head1 SOURCE CODE
 
 The source code is on L<< github|https://github.com/ReneNyffenegger/perl-Geo-OSM-Render >>. Meaningful pull requests are welcome.
 

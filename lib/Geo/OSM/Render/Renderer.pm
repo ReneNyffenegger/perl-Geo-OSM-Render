@@ -194,7 +194,7 @@ copy of the full license at: L<http://www.perlfoundation.org/artistic_license_2_
 #_}
 #_{ POD: Source Code
 
-=head1 Source Code
+=head1 SOURCE CODE
 
 The source code is on L<< github|https://github.com/ReneNyffenegger/perl-Geo-OSM-Render >>. Meaningful pull requests are welcome.
 
