@@ -3,3 +3,5 @@
 \.bak$
 Geo-OSM-Render-.*\.tar\.gz
 blib
+MANIFEST.SKIP$
+README\.md$
