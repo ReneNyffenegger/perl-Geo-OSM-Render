@@ -34,6 +34,10 @@ Before OpenStreetMap data can be rendered, the OSM coordinates must be projected
 Descendents of this class should (must...) provide the conversion function C<<lat_lon_to_x_y>> which performce
 this projection.
 
+Currently, two classes are derived from this class:
+L<< Geo::OSM::Render::Projection::CH_LV03 >> and
+L<< Geo::OSM::Render::Projection::Ident >>.
+
 =cut
 
 #_}

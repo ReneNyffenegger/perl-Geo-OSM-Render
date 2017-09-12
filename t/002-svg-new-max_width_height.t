@@ -34,10 +34,10 @@ my ($x_max, $y_max) = lat_lng_2_y_x($lat_max, $lon_max);
 # ", $x_min / 1000, $x_max / 1000, $y_min / 1000, $y_max / 1000);
 
 my $osm_vp_cl      = Geo::OSM::Render::Viewport::Clipped  ->new(
-   x_of_map_0       => $x_min,
-   x_of_map_width   => $x_max,
-   y_of_map_0       => $y_max,
-   y_of_map_height  => $y_min,
+   x_of_map_0       => $x_min, # 484.750
+   x_of_map_width   => $x_max, # 828.693
+   y_of_map_0       => $y_max, # 299.778
+   y_of_map_height  => $y_min, #  75.129
    max_width_height => 750
 );
 
