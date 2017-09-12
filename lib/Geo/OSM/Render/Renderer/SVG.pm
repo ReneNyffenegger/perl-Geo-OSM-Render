@@ -120,7 +120,12 @@ sub render_node { #_{
     $osm_renderer_svg -> render_node(
       $node,
       r => $radius,
-      styles=> { … }
+      styles=> {
+        'fill'          => '#f63',
+        'stroke'        => '#f31',
+        'stroke-width'  =>     5 ,
+         …
+      }
     ); 
 
 Renders a L<< node|Geo::OSM::Primitive::Node >>.
@@ -156,7 +161,12 @@ sub render_way { #_{
 =head2 render_way
 
     $osm_renderer_svg -> render_way(
-      styles=> { … }
+      styles=> {
+       'stroke'       => 'rgb( 30,  60, 255)',
+       'stroke-width' => '2px',
+       'fill'         => 'none',
+        …
+      }
     ); 
 
 Renders a L<< way|Geo::OSM::Primitive::Way >>.
@@ -298,7 +308,7 @@ See also L<< Geo::OSM::Render::Renderer/render_way >>.
 
 =head1 AUTHOR
 
-René Nyffenegger <rene.nyffenegger@adp-gmbh.ch>
+René Nyffenegger C<< rene.nyffenegger at adp-gmbh.ch >>
 
 =cut
 
