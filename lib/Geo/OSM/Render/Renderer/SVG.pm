@@ -123,6 +123,8 @@ sub render_node { #_{
       styles=> { … }
     ); 
 
+Renders a L<< node|Geo::OSM::Primitive::Node >>.
+
 See also L<Geo::OSM::Render::Renderer/render_node>.
 
 =cut
@@ -146,6 +148,47 @@ See also L<Geo::OSM::Render::Renderer/render_node>.
       r  => $r,
       style=>$styles
   );
+
+} #_}
+sub render_way { #_{
+#_{ POD
+
+=head2 render_node
+
+    $osm_renderer_svg -> render_node(
+      $node,
+      r => $radius,
+      styles=> { … }
+    ); 
+
+Renders a L<< node|Geo::OSM::Primitive::Node >>.
+
+See also L<Geo::OSM::Render::Renderer/render_node>.
+
+=cut
+#_}
+
+  my $self      = shift;
+  my $way       = shift;
+
+  my %opts      = @_;
+
+  my $styles = delete $opts{styles} // {};
+
+  $self->SUPER::render_way($way);
+
+  my @nodes  = $way->nodes();
+  my $points = '';
+  for my $node (@nodes) {
+    my ($x_map, $y_map) = $self->node_to_map_coordinates($node);
+    $points .= ' ' if $points;
+    $points .= "$x_map, $y_map";
+  }
+
+  $self->{svg}->polyline(
+    points => $points,
+    style  => $styles
+  );        
 
 } #_}
 # sub _determine_width_height { #_{

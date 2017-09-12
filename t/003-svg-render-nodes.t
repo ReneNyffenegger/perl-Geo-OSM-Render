@@ -4,11 +4,17 @@ use Test::More tests => 4;
 use Test::File;
 
 use Geo::OSM::Primitive::Node;
+use Geo::OSM::Primitive::Way;
 use Geo::OSM::Render::Projection::Ident;
 use Geo::OSM::Render::Viewport::Clipped;
 
 my $node_1 = Geo::OSM::Primitive::Node->new( 42, 4, 2);
 my $node_2 = Geo::OSM::Primitive::Node->new( 99, 0, 0);
+my $node_3 = Geo::OSM::Primitive::Node->new(100, 3, 1);
+my $node_4 = Geo::OSM::Primitive::Node->new(101, 1, 2);
+
+my $way_1  = Geo::OSM::Primitive::Way->new(1);
+$way_1->_set_cache_nodes($node_1, $node_3, $node_4, $node_2);
 
 my $proj = Geo::OSM::Render::Projection::Ident->new();
 my $vp   = Geo::OSM::Render::Viewport::Clipped->new (
@@ -46,6 +52,15 @@ $osm_renderer_svg->render_node(
         'stroke'        => '#135',
         'stroke-width'  =>     8 ,
    }
+);
+
+$osm_renderer_svg->render_way(
+  $way_1,
+  styles => {
+    'stroke'       => 'rgb( 30,  60, 255)',
+    'stroke-width' => '3px',
+    'fill'         => 'none',
+  }
 );
 
 $osm_renderer_svg->end;

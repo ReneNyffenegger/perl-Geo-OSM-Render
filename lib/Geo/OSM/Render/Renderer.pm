@@ -86,7 +86,7 @@ sub render_node { #_{
 
     $osm_svg_renderer->render_node($node);
 
-Renders C<< $node>> which must be a L<Geo::OSM::Primitive::Node> (or a derivative of it).
+Renders C<< $node>> which must be a L<Geo::OSM::Primitive::Node> (or derived from it)i.
 
 =cut
 
@@ -96,6 +96,26 @@ Renders C<< $node>> which must be a L<Geo::OSM::Primitive::Node> (or a derivativ
   my $node  = shift;
 
   croak "$node is not a Node" unless $node->isa('Geo::OSM::Primitive::Node');
+
+} #_}
+sub render_way { #_{
+
+#_{ POD
+
+=head2 render_way
+
+    $osm_svg_renderer->render_way($way);
+
+Renders C<< $way>> which must be a L<Geo::OSM::Primitive::Way> (or derived from it)i.
+
+=cut
+
+#_}
+
+  my $self  = shift;
+  my $way   = shift;
+
+  croak "$way is not a Way" unless $way->isa('Geo::OSM::Primitive::Way');
 
 } #_}
 sub node_to_map_coordinates {
